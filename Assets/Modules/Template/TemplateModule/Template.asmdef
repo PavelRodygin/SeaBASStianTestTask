@@ -1,0 +1,27 @@
+{
+    "name": "Template",
+    "rootNamespace": "",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "VContainer",
+        "UniTask",
+        "R3.Unity",
+        "UniTask.DOTween",
+        "DOTween.Modules",
+        "Core",
+        "Systems",
+        "Services",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

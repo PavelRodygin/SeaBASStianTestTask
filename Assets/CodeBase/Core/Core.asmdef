@@ -1,0 +1,26 @@
+{
+    "name": "Core",
+    "rootNamespace": "",
+    "references": [
+        "VContainer",
+        "UniTask",
+        "R3.Unity",
+        "DOTween.Modules",
+        "UniTask.DOTween",
+        "Unity.InputSystem",
+        "UnityEditor.UI",
+        "UnityEngine.UI",
+        "Unity.Nuget.Newtonsoft-Json"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

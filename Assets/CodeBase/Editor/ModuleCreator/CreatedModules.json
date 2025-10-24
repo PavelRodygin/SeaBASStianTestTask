@@ -1,0 +1,13 @@
+[
+  "Assets/Modules/Base/GarageScreen",
+  "Assets/Modules/Base/NewModuleScreen",
+  "Assets/Modules/Base/NewModuleScreen",
+  "Assets/Modules/Base/AbramsScreen",
+  "Assets/Modules/Base/RoguelikeScreen",
+  "Assets/Modules/Test/NewModuleModule",
+  "Assets/Modules/Base/Playground3DModule",
+  "Assets/Modules/Base/ScrollSampleModule",
+  "Assets/Modules/Base/TimerSampleModule",
+  "Assets/Modules/Base/AnimationSampleModule",
+  "Assets/Modules/Base/RequestSampleModule"
+]

@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "5d47fd16e91bee62",
+    "type": "split",
+    "children": [
+      {
+        "id": "b4e686340b6ca1d3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e9a1ed356986c8a6",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "ShrimpOlympus_ObsidianVault/ShrimpOlympus.canvas",
+                "viewState": {
+                  "x": 2831.820810209985,
+                  "y": 1033.5866459439153,
+                  "zoom": -1.0661995800098405
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "ShrimpOlympus"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a3d90da2a760615e",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a76cbb1502337e2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a966d66914cd4277",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "57ebe4017b20126c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "80d3712a77a48584",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c6fedd11ccaff3be",
+    "type": "split",
+    "children": [
+      {
+        "id": "54d1473749424fc1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3eda42578832de9f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "413759b3b8dba488",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "2ecc8caa36f85e1b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "1a6673dedd45cfb5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:Create new base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "e9a1ed356986c8a6",
+  "lastOpenFiles": [
+    "Library/ProtocolInstance.json",
+    "Temp/UnityTempFile-332a41da054ee0a4c9ec6ee6383d08ac",
+    "Temp/ADB-Refreshb517fad257beb6e40aaa26ddc23c5dc4",
+    "Temp/UnityTempFile-2d87db9d4ebe32d4e9d4c510cd0b98f6",
+    "Library/Artifacts/37/371d6a5fecc174650f570731f32d3547",
+    "Temp/ADB-Refresh768d85c802b32ab4a86c2ad050578298",
+    "Library/Search/propertyDatabase.db_901586e592ae421a9ea8bd052de5f725_temp",
+    "Library/Artifacts/71/71eea0430d618ae9723ca216c97437f4",
+    "Temp/ADB-Refresh973d6fe00234bb1459065369622fad6a",
+    "Library/Artifacts/81/81e05e9a438b53fbc66ad7a46cf5ad4e",
+    "Temp/ADB-Refresh98608c0abb3e00446b33c9b189456d93",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Volume.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Settings.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Play.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Pause.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Mute.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Fullscreen.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Video/IconsUI/Exit Fullscreen.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Trophies/Icons UI/Star - Sharp.png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Trophies/Icons UI/Star - Sharp (Bold).png",
+    "Assets/Art/GUI Pack/Sprites/Demo/Popups/Trophies/Icons UI/Star - Semi Round.png",
+    "2025-06-02.md",
+    "Untitled.canvas"
+  ]
+}

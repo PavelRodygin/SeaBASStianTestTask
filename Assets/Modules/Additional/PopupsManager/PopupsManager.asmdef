@@ -1,0 +1,22 @@
+{
+    "name": "PopupsManager",
+    "rootNamespace": "",
+    "references": [
+        "VContainer",
+        "Core",
+        "Services",
+        "Implementation",
+        "Systems",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
