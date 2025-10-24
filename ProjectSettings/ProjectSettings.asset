@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: ShrimpOlympus
-  productName: TechnicalSample
+  companyName: PavelRodygin
+  productName: SeaBASStianTestTask
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -829,7 +829,7 @@ PlayerSettings:
     PS5: TextMeshPro
     Stadia: TextMeshPro
     Standalone: UNITASK_DOTWEEN_SUPPORT;TextMeshPro;MIRROR;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;MIRROR_96_OR_NEWER;EDGEGAP_PLUGIN_SERVERS
-    WebGL: TextMeshPro;DOTWEEN;UNITASK_DOTWEEN_SUPPORT;MIRROR;MIRROR_89_OR_NEWER;MIRROR_90_OR_NEWER;MIRROR_93_OR_NEWER;MIRROR_96_OR_NEWER;EDGEGAP_PLUGIN_SERVERS
+    WebGL: TextMeshPro;DOTWEEN;UNITASK_DOTWEEN_SUPPORT
     Windows Store Apps: TextMeshPro
     XboxOne: TextMeshPro
     iPhone: TextMeshPro

@@ -127,9 +127,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1506365526}
     m_Modifications:
+    - target: {fileID: 1429407770634322613, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429407770634322613, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1429407770634322613, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3545869489180579486, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
       propertyPath: m_Name
       value: ScrollSampleModuleView
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018564524190879008, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018564524190879008, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4018564524190879008, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256889571448290603, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256889571448290603, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7034640643637539368, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
       propertyPath: m_Pivot.x
@@ -210,6 +242,10 @@ PrefabInstance:
     - target: {fileID: 7034640643637539368, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7801516370331248776, guid: d203e6d211dedd344ba8a762340efdd4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000020137193
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -557,6 +593,7 @@ MonoBehaviour:
   moduleCanvas: {fileID: 1506365522}
   mainCamera: {fileID: 645646652}
   scrollSampleView: {fileID: 553804255}
+  scrollItemPrefab: {fileID: 748271552901131531, guid: f6d8c1e0f5b441d46a7e209395f53438, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

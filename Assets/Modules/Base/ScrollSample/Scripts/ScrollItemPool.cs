@@ -9,17 +9,26 @@ namespace Modules.Base.ScrollSampleModule.Scripts
     /// </summary>
     public class ScrollItemPool : ObjectPool<ScrollItemView>
     {
-        public ScrollItemPool(
-            IFactory<ScrollItemView> factory,
-            Transform inactiveParent = null,
-            int initialSize = 0,
-            int maxSize = -1) 
-            : base(factory, inactiveParent, initialSize, maxSize)
+        private Transform _contentParent;
+
+        public ScrollItemPool(IFactory<ScrollItemView> factory) 
+            : base(factory, inactiveObjectsParent: null, initialSize: 10, maxSize: 50)
         {
+        }
+
+        /// <summary>
+        /// Initialize pool with content parent transform
+        /// </summary>
+        public void Initialize(Transform contentParent)
+        {
+            _contentParent = contentParent;
         }
 
         protected override void OnSpawned(ScrollItemView item)
         {
+            if (_contentParent != null && item.RectTransform.parent != _contentParent)
+                item.RectTransform.SetParent(_contentParent, false);
+            
             item.SetActive(true);
         }
 

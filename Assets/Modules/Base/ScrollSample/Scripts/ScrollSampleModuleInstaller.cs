@@ -20,7 +20,11 @@ namespace Modules.Base.ScrollSampleModule.Scripts
     /// </summary>
     public class ScrollSampleModuleInstaller : BaseModuleSceneInstaller
     {
+        [Header("View")]
         [SerializeField] private ScrollSampleView scrollSampleView;
+        
+        [Header("Scroll Item Prefab")]
+        [SerializeField] private ScrollItemView scrollItemPrefab;
 
         public override void RegisterSceneDependencies(IContainerBuilder builder)
         {
@@ -33,6 +37,12 @@ namespace Modules.Base.ScrollSampleModule.Scripts
             builder.Register<ScrollSampleModuleModel>(Lifetime.Singleton);
             builder.Register<ScrollSamplePresenter>(Lifetime.Singleton);
             builder.RegisterComponent(scrollSampleView).As<ScrollSampleView>();
+            
+            // Register scroll item factory and pool
+            builder.Register<ScrollItemFactory>(Lifetime.Singleton)
+                .WithParameter(scrollItemPrefab)
+                .AsImplementedInterfaces();
+            builder.Register<ScrollItemPool>(Lifetime.Singleton);
         }
     }
 }

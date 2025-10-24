@@ -9,17 +9,15 @@ namespace Modules.Base.ScrollSampleModule.Scripts
     public class ScrollItemFactory : IFactory<ScrollItemView>
     {
         private readonly ScrollItemView _prefab;
-        private readonly Transform _parent;
 
-        public ScrollItemFactory(ScrollItemView prefab, Transform parent)
+        public ScrollItemFactory(ScrollItemView prefab)
         {
             _prefab = prefab;
-            _parent = parent;
         }
 
         public ScrollItemView Create()
         {
-            var item = Object.Instantiate(_prefab, _parent);
+            var item = Object.Instantiate(_prefab);
             item.SetActive(false);
             return item;
         }
