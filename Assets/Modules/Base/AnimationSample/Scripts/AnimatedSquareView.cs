@@ -24,10 +24,10 @@ namespace Modules.Base.AnimationSampleModule.Scripts
 
         private void Awake()
         {
-            if (RectTransform == null)
+            if (!RectTransform)
                 RectTransform = GetComponent<RectTransform>();
             
-            if (Image == null)
+            if (!Image)
                 Image = GetComponent<Image>();
         }
 
@@ -75,9 +75,8 @@ namespace Modules.Base.AnimationSampleModule.Scripts
                 _animationSequence.Kill();
                 _animationSequence = null;
             }
-
-            // Check if object is not destroyed before accessing
-            if (this == null || RectTransform == null) return;
+            
+            if (!this || !RectTransform) return;
 
             RectTransform.DOKill();
             RectTransform.anchoredPosition = _initialPosition;

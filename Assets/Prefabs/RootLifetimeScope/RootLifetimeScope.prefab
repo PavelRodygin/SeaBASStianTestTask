@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicAudioSource: {fileID: 4669333744180989668}
-  mainMelodyClip: {fileID: 8300000, guid: 37e59e77af5621744b8ece36adc7092a, type: 3}
+  mainMelodyClip: {fileID: 8300000, guid: d50bb82d89fec0540a9ea6d1caaafdb5, type: 3}
   gameMelodyClip: {fileID: 8300000, guid: d50bb82d89fec0540a9ea6d1caaafdb5, type: 3}
   fadeDuration: 1
 --- !u!82 &4669333744180989668

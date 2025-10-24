@@ -67,11 +67,11 @@ namespace Modules.Base.AnimationSampleModule.Scripts
         {
             _openMainMenuCommand
                 .ThrottleFirst(TimeSpan.FromMilliseconds(_animationSampleModuleModel.CommandThrottleDelay))
-                .Subscribe(_ => OnMainMenuButtonClicked())
+                .Subscribe(_ => OnMainMenuCommand())
                 .AddTo(_disposables);
         }
 
-        private void OnMainMenuButtonClicked()
+        private void OnMainMenuCommand()
         {
             _openNewModuleCommand.Execute(ModulesMap.MainMenu);
         }

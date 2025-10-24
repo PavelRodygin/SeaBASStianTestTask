@@ -59,7 +59,6 @@ namespace Modules.Base.TimerSampleModule.Scripts
                 .Subscribe(_ => commands.OpenMainMenuCommand.Execute(default))
                 .AddTo(this);
 
-            // Keyboard navigation - Escape key for exit
             var openMainMenuPerformedObservable =
                 _inputSystemService.GetPerformedObservable(_inputSystemService.InputActions.UI.Cancel);
 
@@ -78,7 +77,7 @@ namespace Modules.Base.TimerSampleModule.Scripts
 
         public void UpdateTimeText(string timeString)
         {
-            if (timeText != null)
+            if (timeText)
                 timeText.text = timeString;
         }
 
@@ -89,9 +88,9 @@ namespace Modules.Base.TimerSampleModule.Scripts
 
         private void ValidateUIElements()
         {
-            if (exitButton == null) 
+            if (!exitButton) 
                 Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(TimerSampleView)}");
-            if (timeText == null) 
+            if (!timeText) 
                 Debug.LogError($"{nameof(timeText)} is not assigned in {nameof(TimerSampleView)}");
         }
     }

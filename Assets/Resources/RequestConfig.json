@@ -1,0 +1,6 @@
+{
+  "RequestUrl": "https://example.com",
+  "Timeout": 10,
+  "Description": "Configuration for RequestSample module. Change RequestUrl to test different endpoints."
+}
+

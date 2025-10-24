@@ -16,43 +16,31 @@ namespace Modules.Base.RequestSampleModule.Scripts
     public readonly struct RequestSampleCommands
     {
         public readonly ReactiveCommand<Unit> OpenMainMenuCommand;
-        public readonly ReactiveCommand<Unit> SettingsPopupCommand;
-        public readonly ReactiveCommand<bool> SoundToggleCommand;
+        public readonly ReactiveCommand<Unit> MakeRequestCommand;
 
         public RequestSampleCommands(
             ReactiveCommand<Unit> openMainMenuCommand,
-            ReactiveCommand<Unit> settingsPopupCommand,
-            ReactiveCommand<bool> soundToggleCommand)
+            ReactiveCommand<Unit> makeRequestCommand)
         {
             OpenMainMenuCommand = openMainMenuCommand;
-            SettingsPopupCommand = settingsPopupCommand;
-            SoundToggleCommand = soundToggleCommand;
+            MakeRequestCommand = makeRequestCommand;
         }
     }
     
     /// <summary>
-    /// View for RequestSample module that handles UI interactions and visual representation
-    /// 
-    /// IMPORTANT: This is a requestSample file for ModuleCreator system.
-    /// When creating a new module, this file will be copied and modified.
-    /// 
-    /// Key points for customization:
-    /// 1. Change class name from RequestSampleView to YourModuleNameView
-    /// 2. Update namespace Modules.Base.RequestSampleModule.Scripts match your module location
-    /// 3. Add your specific UI elements and commands
-    /// 4. Customize event handling for your UI
-    /// 5. Update validation methods for your UI elements
-    /// 6. Add any additional UI functionality your module needs
-    /// 
-    /// NOTE: Exit button (exitButton) is already configured to return to MainMenuModule
+    /// View for RequestSample module - makes HTTP request and displays response
     /// </summary>
     public class RequestSampleView : BaseView
     {
         [Header("UI Elements")]
         [SerializeField] private Button exitButton;
-        [SerializeField] private Button settingsPopupButton;
-        [SerializeField] private Toggle musicToggle;
-        [SerializeField] private TMP_Text requestSampleScreenTitle;
+        [SerializeField] private Button makeRequestButton;
+        
+        [Header("Display")]
+        [SerializeField] private TMP_Text urlText;
+        [SerializeField] private TMP_Text responseText;
+        [SerializeField] private TMP_Text statusText;
+        [SerializeField] private GameObject loadingIndicator;
         
         private InputSystemService _inputSystemService;
 
@@ -80,17 +68,11 @@ namespace Modules.Base.RequestSampleModule.Scripts
                 .Subscribe(_ => commands.OpenMainMenuCommand.Execute(default))
                 .AddTo(this);
 
-            settingsPopupButton.OnClickAsObservable()
+            makeRequestButton.OnClickAsObservable()
                 .Where(_ => IsActive)
-                .Subscribe(_ => commands.SettingsPopupCommand.Execute(default))
+                .Subscribe(_ => commands.MakeRequestCommand.Execute(default))
                 .AddTo(this);
-
-            musicToggle.OnValueChangedAsObservable()
-                .Where(_ => IsActive)
-                .Subscribe(_ => commands.SoundToggleCommand.Execute(musicToggle.isOn))
-                .AddTo(this);
-
-            // Keyboard navigation support - Escape key for exit
+            
             var openMainMenuPerformedObservable =
                 _inputSystemService.GetPerformedObservable(_inputSystemService.InputActions.UI.Cancel);
 
@@ -107,27 +89,49 @@ namespace Modules.Base.RequestSampleModule.Scripts
             _inputSystemService.SetFirstSelectedObject(exitButton);
         }
 
-        public void SetTitle(string title)
+        public void SetUrl(string url)
         {
-            if (requestSampleScreenTitle != null)
-                requestSampleScreenTitle.text = title;
-            else
-                Debug.LogWarning("requestSampleScreenTitle is not assigned in the Inspector.");
+            if (urlText)
+                urlText.text = $"URL: {url}";
         }
 
-        public void InitializeSoundToggle(bool isMusicOn) => musicToggle.SetIsOnWithoutNotify(isMusicOn);
-
-        public void OnScreenEnabled()
+        public void SetResponse(string response)
         {
-            _inputSystemService.SetFirstSelectedObject(exitButton);
+            if (responseText)
+                responseText.text = response;
         }
+
+        public void SetStatus(string status, bool isSuccess)
+        {
+            if (!statusText) return;
+            
+            statusText.text = status;
+            statusText.color = isSuccess ? Color.green : Color.red;
+        }
+
+        public void SetLoading(bool isLoading)
+        {
+            if (loadingIndicator)
+                loadingIndicator.SetActive(isLoading);
+            
+            if (makeRequestButton)
+                makeRequestButton.interactable = !isLoading;
+        }
+
+        public void OnScreenEnabled() => _inputSystemService.SetFirstSelectedObject(makeRequestButton);
 
         private void ValidateUIElements()
         {
-            if (exitButton == null) Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(RequestSampleView)}");
-            if (settingsPopupButton == null) Debug.LogError($"{nameof(settingsPopupButton)} is not assigned in {nameof(RequestSampleView)}");
-            if (musicToggle == null) Debug.LogError($"{nameof(musicToggle)} is not assigned in {nameof(RequestSampleView)}");
-            if (requestSampleScreenTitle == null) Debug.LogError($"{nameof(requestSampleScreenTitle)} is not assigned in {nameof(RequestSampleView)}");
+            if (!exitButton) 
+                Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(RequestSampleView)}");
+            if (!makeRequestButton) 
+                Debug.LogError($"{nameof(makeRequestButton)} is not assigned in {nameof(RequestSampleView)}");
+            if (!urlText) 
+                Debug.LogError($"{nameof(urlText)} is not assigned in {nameof(RequestSampleView)}");
+            if (!responseText) 
+                Debug.LogError($"{nameof(responseText)} is not assigned in {nameof(RequestSampleView)}");
+            if (!statusText) 
+                Debug.LogError($"{nameof(statusText)} is not assigned in {nameof(RequestSampleView)}");
         }
     }
 }
