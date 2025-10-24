@@ -10,39 +10,40 @@ namespace Modules.Base.MainMenu.Scripts
 {
     public readonly struct MainMenuCommands
     {
-        public readonly ReactiveCommand<Unit> OpenConverterCommand;
-        public readonly ReactiveCommand<Unit> OpenTicTacCommand;
-        public readonly ReactiveCommand<Unit> OpenRoguelikeCommand;
+        public readonly ReactiveCommand<Unit> OpenScrollSampleCommand;
+        public readonly ReactiveCommand<Unit> OpenTimerSampleCommand;
+        public readonly ReactiveCommand<Unit> OpenAnimationSampleCommand;
+        public readonly ReactiveCommand<Unit> OpenRequestSampleCommand;
         public readonly ReactiveCommand<Unit> SettingsPopupCommand;
-        public readonly ReactiveCommand<Unit> SecondPopupCommand;
         public readonly ReactiveCommand<bool> SoundToggleCommand;
 
         public MainMenuCommands(
-            ReactiveCommand<Unit> openConverterCommand,
-            ReactiveCommand<Unit> openTicTacCommand,
-            ReactiveCommand<Unit> openRoguelikeCommand,
+            ReactiveCommand<Unit> openScrollSampleCommand,
+            ReactiveCommand<Unit> openTimerSampleCommand,
+            ReactiveCommand<Unit> openAnimationSampleCommand,
+            ReactiveCommand<Unit> openRequestSampleCommand,
             ReactiveCommand<Unit> settingsPopupCommand,
-            ReactiveCommand<Unit> secondPopupCommand,
             ReactiveCommand<bool> soundToggleCommand)
         {
-            OpenConverterCommand = openConverterCommand;
-            OpenTicTacCommand = openTicTacCommand;
-            OpenRoguelikeCommand = openRoguelikeCommand;
+            OpenScrollSampleCommand = openScrollSampleCommand;
+            OpenTimerSampleCommand = openTimerSampleCommand;
+            OpenAnimationSampleCommand = openAnimationSampleCommand;
+            OpenRequestSampleCommand = openRequestSampleCommand;
             SettingsPopupCommand = settingsPopupCommand;
-            SecondPopupCommand = secondPopupCommand;
             SoundToggleCommand = soundToggleCommand;
         }
     }
     
     public class MainMenuView : BaseView
     {
-        [Header("Open Module Buttons")]
-        [SerializeField] private Button converterButton;
-        [SerializeField] private Button ticTacButton;
-        [SerializeField] private Button roguelikeButton;
+        [Header("Test Task Module Buttons")]
+        [SerializeField] private Button scrollSampleButton;
+        [SerializeField] private Button timerSampleButton;
+        [SerializeField] private Button animationSampleButton;
+        [SerializeField] private Button requestSampleButton;
         
+        [Header("UI Controls")]
         [SerializeField] private Button settingsPopupButton;
-        [SerializeField] private Button secondPopupButton;
         [SerializeField] private Toggle musicToggle;
 
         private InputSystemService _inputSystemService;
@@ -60,29 +61,29 @@ namespace Modules.Base.MainMenu.Scripts
 
         public void SetupEventListeners(MainMenuCommands commands)
         {
-            converterButton.OnClickAsObservable()
+            scrollSampleButton.OnClickAsObservable()
                 .Where(_ => IsActive)
-                .Subscribe(_ => commands.OpenConverterCommand.Execute(default))
+                .Subscribe(_ => commands.OpenScrollSampleCommand.Execute(default))
                 .AddTo(this);
 
-            ticTacButton.OnClickAsObservable()
+            timerSampleButton.OnClickAsObservable()
                 .Where(_ => IsActive)
-                .Subscribe(_ => commands.OpenTicTacCommand.Execute(default))
+                .Subscribe(_ => commands.OpenTimerSampleCommand.Execute(default))
                 .AddTo(this);
 
-            roguelikeButton.OnClickAsObservable()
+            animationSampleButton.OnClickAsObservable()
                 .Where(_ => IsActive)
-                .Subscribe(_ => commands.OpenRoguelikeCommand.Execute(default))
+                .Subscribe(_ => commands.OpenAnimationSampleCommand.Execute(default))
+                .AddTo(this);
+
+            requestSampleButton.OnClickAsObservable()
+                .Where(_ => IsActive)
+                .Subscribe(_ => commands.OpenRequestSampleCommand.Execute(default))
                 .AddTo(this);
 
             settingsPopupButton.OnClickAsObservable()
                 .Where(_ => IsActive)
                 .Subscribe(_ => commands.SettingsPopupCommand.Execute(default))
-                .AddTo(this);
-
-            secondPopupButton.OnClickAsObservable()
-                .Where(_ => IsActive)
-                .Subscribe(_ => commands.SecondPopupCommand.Execute(default))
                 .AddTo(this);
 
             musicToggle.OnValueChangedAsObservable()
@@ -101,7 +102,7 @@ namespace Modules.Base.MainMenu.Scripts
 
         public void OnScreenEnabled()
         {
-            _inputSystemService.SetFirstSelectedObject(converterButton);
+            _inputSystemService.SetFirstSelectedObject(scrollSampleButton);
         }
     }
 }

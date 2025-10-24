@@ -16,43 +16,22 @@ namespace Modules.Base.TimerSampleModule.Scripts
     public readonly struct TimerSampleCommands
     {
         public readonly ReactiveCommand<Unit> OpenMainMenuCommand;
-        public readonly ReactiveCommand<Unit> SettingsPopupCommand;
-        public readonly ReactiveCommand<bool> SoundToggleCommand;
 
-        public TimerSampleCommands(
-            ReactiveCommand<Unit> openMainMenuCommand,
-            ReactiveCommand<Unit> settingsPopupCommand,
-            ReactiveCommand<bool> soundToggleCommand)
+        public TimerSampleCommands(ReactiveCommand<Unit> openMainMenuCommand)
         {
             OpenMainMenuCommand = openMainMenuCommand;
-            SettingsPopupCommand = settingsPopupCommand;
-            SoundToggleCommand = soundToggleCommand;
         }
     }
     
     /// <summary>
-    /// View for TimerSample module that handles UI interactions and visual representation
-    /// 
-    /// IMPORTANT: This is a timerSample file for ModuleCreator system.
-    /// When creating a new module, this file will be copied and modified.
-    /// 
-    /// Key points for customization:
-    /// 1. Change class name from TimerSampleView to YourModuleNameView
-    /// 2. Update namespace Modules.Base.TimerSampleModule.Scripts match your module location
-    /// 3. Add your specific UI elements and commands
-    /// 4. Customize event handling for your UI
-    /// 5. Update validation methods for your UI elements
-    /// 6. Add any additional UI functionality your module needs
-    /// 
-    /// NOTE: Exit button (exitButton) is already configured to return to MainMenuModule
+    /// View for TimerSample module - displays current time with millisecond precision
+    /// Updates every frame without memory allocations
     /// </summary>
     public class TimerSampleView : BaseView
     {
         [Header("UI Elements")]
         [SerializeField] private Button exitButton;
-        [SerializeField] private Button settingsPopupButton;
-        [SerializeField] private Toggle musicToggle;
-        [SerializeField] private TMP_Text timerSampleScreenTitle;
+        [SerializeField] private TMP_Text timeText;
         
         private InputSystemService _inputSystemService;
 
@@ -80,17 +59,7 @@ namespace Modules.Base.TimerSampleModule.Scripts
                 .Subscribe(_ => commands.OpenMainMenuCommand.Execute(default))
                 .AddTo(this);
 
-            settingsPopupButton.OnClickAsObservable()
-                .Where(_ => IsActive)
-                .Subscribe(_ => commands.SettingsPopupCommand.Execute(default))
-                .AddTo(this);
-
-            musicToggle.OnValueChangedAsObservable()
-                .Where(_ => IsActive)
-                .Subscribe(_ => commands.SoundToggleCommand.Execute(musicToggle.isOn))
-                .AddTo(this);
-
-            // Keyboard navigation support - Escape key for exit
+            // Keyboard navigation - Escape key for exit
             var openMainMenuPerformedObservable =
                 _inputSystemService.GetPerformedObservable(_inputSystemService.InputActions.UI.Cancel);
 
@@ -107,15 +76,11 @@ namespace Modules.Base.TimerSampleModule.Scripts
             _inputSystemService.SetFirstSelectedObject(exitButton);
         }
 
-        public void SetTitle(string title)
+        public void UpdateTimeText(string timeString)
         {
-            if (timerSampleScreenTitle != null)
-                timerSampleScreenTitle.text = title;
-            else
-                Debug.LogWarning("timerSampleScreenTitle is not assigned in the Inspector.");
+            if (timeText != null)
+                timeText.text = timeString;
         }
-
-        public void InitializeSoundToggle(bool isMusicOn) => musicToggle.SetIsOnWithoutNotify(isMusicOn);
 
         public void OnScreenEnabled()
         {
@@ -124,10 +89,10 @@ namespace Modules.Base.TimerSampleModule.Scripts
 
         private void ValidateUIElements()
         {
-            if (exitButton == null) Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(TimerSampleView)}");
-            if (settingsPopupButton == null) Debug.LogError($"{nameof(settingsPopupButton)} is not assigned in {nameof(TimerSampleView)}");
-            if (musicToggle == null) Debug.LogError($"{nameof(musicToggle)} is not assigned in {nameof(TimerSampleView)}");
-            if (timerSampleScreenTitle == null) Debug.LogError($"{nameof(timerSampleScreenTitle)} is not assigned in {nameof(TimerSampleView)}");
+            if (exitButton == null) 
+                Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(TimerSampleView)}");
+            if (timeText == null) 
+                Debug.LogError($"{nameof(timeText)} is not assigned in {nameof(TimerSampleView)}");
         }
     }
 }

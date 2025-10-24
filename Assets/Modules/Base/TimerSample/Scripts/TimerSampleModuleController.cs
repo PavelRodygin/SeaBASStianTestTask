@@ -7,18 +7,7 @@ using R3;
 namespace Modules.Base.TimerSampleModule.Scripts
 {
     /// <summary>
-        /// Main controller for TimerSample module that manages the module lifecycle
-        /// and coordinates between Presenter, Model and View
-        /// 
-        /// IMPORTANT: This is a timerSample file for ModuleCreator system.
-        /// When creating a new module, this file will be copied and modified.
-        /// 
-        /// Key points for customization:
-        /// 1. Change class name from TimerSampleModuleController to YourModuleNameModuleController
-        /// 2. Update namespace Modules.Base.TimerSampleModule.Scripts match your module location
-        /// 3. Customize module lifecycle management if needed
-        /// 4. Add specific initialization logic for your module
-        /// 5. Implement custom exit conditions if required
+    /// Controller for TimerSample module - manages timer update loop
     /// </summary>
     public class TimerSampleModuleController : IModuleController
     {
@@ -43,6 +32,7 @@ namespace Modules.Base.TimerSampleModule.Scripts
         public async UniTask Enter(object param)
         {
             SubscribeToModuleUpdates();
+            SubscribeToUpdateLoop();
 
             _timerSamplePresenter.HideInstantly();
             
@@ -71,6 +61,14 @@ namespace Modules.Base.TimerSampleModule.Scripts
             _openNewModuleCommand
                 .ThrottleFirst(TimeSpan.FromMilliseconds(_timerSampleModuleModel.ModuleTransitionThrottleDelay))
                 .Subscribe(RunNewModule)
+                .AddTo(_disposables);
+        }
+
+        private void SubscribeToUpdateLoop()
+        {
+            // Update timer every frame
+            Observable.EveryUpdate()
+                .Subscribe(_ => _timerSamplePresenter.Update())
                 .AddTo(_disposables);
         }
 

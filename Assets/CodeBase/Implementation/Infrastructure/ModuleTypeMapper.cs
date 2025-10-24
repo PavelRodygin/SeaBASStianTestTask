@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using CodeBase.Core.Infrastructure;
 using CodeBase.Core.Infrastructure.Modules;
 using CodeBase.Core.Patterns.Architecture.MVP;
+using Modules.Base.AnimationSampleModule.Scripts;
 using Modules.Base.Bootstrap.Scripts;
 using Modules.Base.MainMenu.Scripts;
+using Modules.Base.RequestSampleModule.Scripts;
+using Modules.Base.ScrollSampleModule.Scripts;
+using Modules.Base.TimerSampleModule.Scripts;
 using VContainer;
 
 namespace CodeBase.Implementation.Infrastructure
@@ -23,6 +27,10 @@ namespace CodeBase.Implementation.Infrastructure
             {
                 { ModulesMap.Bootstrap, typeof(BootstrapModuleController) },
                 { ModulesMap.MainMenu, typeof(MainMenuModuleController) },
+                { ModulesMap.ScrollSample, typeof(ScrollSampleModuleController) },
+                { ModulesMap.TimerSample, typeof(TimerSampleModuleController) },
+                { ModulesMap.AnimationSample, typeof(AnimationSampleModuleController) },
+                { ModulesMap.RequestSample, typeof(RequestSampleModuleController) },
             };
         }
 

@@ -18,11 +18,11 @@ namespace Modules.Base.MainMenu.Scripts
         private readonly IPopupHub _popupHub;
         private readonly AudioSystem _audioSystem;
         
-        private readonly ReactiveCommand<Unit> _openConverterCommand = new();
-        private readonly ReactiveCommand<Unit> _openTicTacCommand = new();
-        private readonly ReactiveCommand<Unit> _openRoguelikeCommand = new();
+        private readonly ReactiveCommand<Unit> _openScrollSampleCommand = new();
+        private readonly ReactiveCommand<Unit> _openTimerSampleCommand = new();
+        private readonly ReactiveCommand<Unit> _openAnimationSampleCommand = new();
+        private readonly ReactiveCommand<Unit> _openRequestSampleCommand = new();
         private readonly ReactiveCommand<Unit> _settingsPopupCommand = new();
-        private readonly ReactiveCommand<Unit> _secondPopupCommand = new();
         private readonly ReactiveCommand<bool> _toggleSoundCommand = new();
         
         private ReactiveCommand<ModulesMap> _openNewModuleCommand = new();
@@ -46,25 +46,25 @@ namespace Modules.Base.MainMenu.Scripts
 
         private void SubscribeToUIUpdates()
         {
-            _openConverterCommand
+            _openScrollSampleCommand
                 .ThrottleFirst(TimeSpan.FromMilliseconds(_mainMenuModuleModel.CommandThrottleDelay))
-                .Subscribe(_ => OnConverterCommand())
+                .Subscribe(_ => OnScrollSampleCommand())
                 .AddTo(_disposables);
-            _openTicTacCommand
+            _openTimerSampleCommand
                 .ThrottleFirst(TimeSpan.FromMilliseconds(_mainMenuModuleModel.CommandThrottleDelay))
-                .Subscribe(_ => OnTicTacCommand())
+                .Subscribe(_ => OnTimerSampleCommand())
                 .AddTo(_disposables);
-            _openRoguelikeCommand
+            _openAnimationSampleCommand
                 .ThrottleFirst(TimeSpan.FromMilliseconds(_mainMenuModuleModel.CommandThrottleDelay))
-                .Subscribe(_ => OnPlayground3DCommand())
+                .Subscribe(_ => OnAnimationSampleCommand())
+                .AddTo(_disposables);
+            _openRequestSampleCommand
+                .ThrottleFirst(TimeSpan.FromMilliseconds(_mainMenuModuleModel.CommandThrottleDelay))
+                .Subscribe(_ => OnRequestSampleCommand())
                 .AddTo(_disposables);
             _settingsPopupCommand
                 .ThrottleFirst(TimeSpan.FromMilliseconds(_mainMenuModuleModel.CommandThrottleDelay))
                 .Subscribe(_ => OnSettingsPopupCommand())
-                .AddTo(_disposables);
-            _secondPopupCommand
-                .ThrottleFirst(TimeSpan.FromMilliseconds(_mainMenuModuleModel.CommandThrottleDelay))
-                .Subscribe(_ => OnSecondPopupCommand())
                 .AddTo(_disposables);
             _toggleSoundCommand.Subscribe(OnToggleSoundCommand).AddTo(_disposables);
         }
@@ -76,11 +76,11 @@ namespace Modules.Base.MainMenu.Scripts
             _mainMenuView.HideInstantly();
 
             var commands = new MainMenuCommands(
-                _openConverterCommand,
-                _openTicTacCommand,
-                _openRoguelikeCommand,
+                _openScrollSampleCommand,
+                _openTimerSampleCommand,
+                _openAnimationSampleCommand,
+                _openRequestSampleCommand,
                 _settingsPopupCommand,
-                _secondPopupCommand,
                 _toggleSoundCommand
             );
 
@@ -119,11 +119,11 @@ namespace Modules.Base.MainMenu.Scripts
             _mainMenuModuleModel?.Dispose();
         }
 
-        private void OnConverterCommand() => _openNewModuleCommand.Execute(ModulesMap.Converter);
-        private void OnTicTacCommand() => _openNewModuleCommand.Execute(ModulesMap.TicTac);
-        private void OnPlayground3DCommand() => _openNewModuleCommand.Execute(ModulesMap.Playground3D);
+        private void OnScrollSampleCommand() => _openNewModuleCommand.Execute(ModulesMap.ScrollSample);
+        private void OnTimerSampleCommand() => _openNewModuleCommand.Execute(ModulesMap.TimerSample);
+        private void OnAnimationSampleCommand() => _openNewModuleCommand.Execute(ModulesMap.AnimationSample);
+        private void OnRequestSampleCommand() => _openNewModuleCommand.Execute(ModulesMap.RequestSample);
         private void OnSettingsPopupCommand() => _popupHub.OpenSettingsPopup();
-        private void OnSecondPopupCommand() => _popupHub.OpenSecondPopup();
         private void OnToggleSoundCommand(bool isOn) => _audioSystem.SetMusicVolume(isOn ? 1 : 0);
     }
 }
