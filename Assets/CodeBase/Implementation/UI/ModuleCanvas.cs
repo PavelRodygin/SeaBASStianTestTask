@@ -15,7 +15,6 @@ namespace CodeBase.Implementation.UI
         public override void InitializeCanvas()
         {
             // Add specific initialization logic here if needed.
-            Debug.Log("ModuleCanvas initialized.");
         }
     }
 }

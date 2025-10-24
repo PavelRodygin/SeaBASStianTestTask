@@ -60,7 +60,6 @@ namespace CodeBase.Services
                 scenes.InsertRange(0, sceneNames);
             }
 
-            Debug.Log("Loading scenes: " + string.Join(", ", scenes));
             await LoadScenesAsync(scenes); //loading of all the needed scenes
             _activeModuleScenes = scenes;
         }

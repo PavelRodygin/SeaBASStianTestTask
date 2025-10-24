@@ -26,7 +26,7 @@ namespace Modules.Base.ScrollSampleModule.Scripts
 
         protected override void OnSpawned(ScrollItemView item)
         {
-            if (_contentParent != null && item.RectTransform.parent != _contentParent)
+            if (_contentParent && item.RectTransform.parent != _contentParent)
                 item.RectTransform.SetParent(_contentParent, false);
             
             item.SetActive(true);

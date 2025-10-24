@@ -37,8 +37,6 @@ namespace CodeBase.Implementation.Infrastructure
         {
             // Register data file loader based on platform
 #if UNITY_WEBGL && !UNITY_EDITOR
-            Debug.Log("[RootLifetimeScope] Registering WebGL IndexedDB data file loader");
-            
             // Create WebGLSerializableDataFileLoader GameObject if it doesn't exist
             if (_webGLDataFileLoader == null)
             {
@@ -46,13 +44,11 @@ namespace CodeBase.Implementation.Infrastructure
                 loaderGO.transform.SetParent(transform); // Make it a child of RootLifetimeScope
                 _webGLDataFileLoader = loaderGO.AddComponent<WebGLSerializableDataFileLoader>();
                 DontDestroyOnLoad(loaderGO); // Persist across scenes
-                Debug.Log("[RootLifetimeScope] Created WebGLSerializableDataFileLoader GameObject");
             }
             
             builder.RegisterInstance(_webGLDataFileLoader)
                 .As<IDataFileLoader>();
 #else
-            Debug.Log("[RootLifetimeScope] Registering standard file loader (with WebGL-safe implementation)");
             builder.Register<SerializableDataFileLoader>(Lifetime.Singleton)
                 .As<IDataFileLoader>();
 #endif

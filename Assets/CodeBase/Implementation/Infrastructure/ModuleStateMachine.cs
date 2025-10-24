@@ -69,59 +69,31 @@ namespace CodeBase.Implementation.Infrastructure
 #endif
             try
             {
-                Debug.Log($"[ModuleStateMachine] LoadScenesForModule START: {modulesMap}");
                 await _sceneService.LoadScenesForModule(modulesMap);
-                Debug.Log($"[ModuleStateMachine] LoadScenesForModule COMPLETE");
-                
-                Debug.Log($"[ModuleStateMachine] UnloadUnusedScenesAsync START");
                 await _sceneService.UnloadUnusedScenesAsync();
-                Debug.Log($"[ModuleStateMachine] UnloadUnusedScenesAsync COMPLETE");
                 
-                Debug.Log($"[ModuleStateMachine] SetActiveScene START");
                 var moduleScene = SceneManager.GetSceneByName(modulesMap.ToString());
                 if (moduleScene.IsValid())
                     SceneManager.SetActiveScene(moduleScene);
-                Debug.Log($"[ModuleStateMachine] SetActiveScene COMPLETE");
 
-                Debug.Log($"[ModuleStateMachine] EnsureSingleEventSystem START");
                 // Ensure only one EventSystem exists after scene load (critical for UI and WebGL)
                 _inputSystemService.EnsureSingleEventSystem();
-                Debug.Log($"[ModuleStateMachine] EnsureSingleEventSystem COMPLETE");
                 
-                Debug.Log($"[ModuleStateMachine] CombineScenes START");
                 // creates children for the root installer
                 var sceneLifetimeScope =
                     _sceneInstallerService.CombineScenes(LifetimeScope.Find<RootLifetimeScope>(), true);
-                Debug.Log($"[ModuleStateMachine] CombineScenes COMPLETE");
                 
-                Debug.Log($"[ModuleStateMachine] ResolveModuleController START");
                 CurrentModuleController = _moduleTypeMapper.ResolveModuleController(modulesMap, sceneLifetimeScope.Container);
                 CurrentModulesMap = modulesMap;
-                Debug.Log($"[ModuleStateMachine] ResolveModuleController COMPLETE");
                 
-                Debug.Log($"[ModuleStateMachine] EnsureAudioListenerExists START");
                 _audioListenerService.EnsureAudioListenerExists(sceneLifetimeScope.Container);
-                Debug.Log($"[ModuleStateMachine] EnsureAudioListenerExists COMPLETE");
 
-                Debug.Log($"[ModuleStateMachine] Controller.Enter START");
                 await CurrentModuleController.Enter(param);
-                Debug.Log($"[ModuleStateMachine] Controller.Enter COMPLETE");
-                
-                Debug.Log($"[ModuleStateMachine] Controller.Execute START");
                 await CurrentModuleController.Execute();
-                Debug.Log($"[ModuleStateMachine] Controller.Execute COMPLETE");
-                
-                Debug.Log($"[ModuleStateMachine] Controller.Exit START");
                 await CurrentModuleController.Exit();
-                Debug.Log($"[ModuleStateMachine] Controller.Exit COMPLETE");
 
-                Debug.Log($"[ModuleStateMachine] Controller.Dispose START");
                 CurrentModuleController.Dispose();
-                Debug.Log($"[ModuleStateMachine] Controller.Dispose COMPLETE");
-                
-                Debug.Log($"[ModuleStateMachine] sceneLifetimeScope.Dispose START");
                 sceneLifetimeScope.Dispose(); // only children lifeTimeScopes are destroyed
-                Debug.Log($"[ModuleStateMachine] sceneLifetimeScope.Dispose COMPLETE");
             }
             catch (Exception ex)
             {

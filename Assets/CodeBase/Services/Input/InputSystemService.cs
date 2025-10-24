@@ -43,7 +43,6 @@ namespace CodeBase.Services.Input
             InputActions.PlayerHumanoid.Disable();
             InputActions.Crane.Disable();
             InputActions.UI.Enable();
-            Debug.Log("Switched to UI mode.");
             OnSwitchToUI?.Invoke();
         }
 
@@ -55,7 +54,6 @@ namespace CodeBase.Services.Input
             InputActions.Crane.Disable();
             InputActions.PlayerHumanoid.Enable();
             InputActions.UI.Enable();
-            Debug.Log("Switched to PlayerHumanoid mode.");
             OnSwitchToPlayerHumanoid?.Invoke();
         }
 
@@ -67,7 +65,6 @@ namespace CodeBase.Services.Input
             InputActions.PlayerHumanoid.Disable();
             InputActions.Crane.Enable();
             InputActions.UI.Enable();
-            Debug.Log("Switched to Crane mode.");
             OnSwitchToCrane?.Invoke();
         }
 
@@ -77,7 +74,6 @@ namespace CodeBase.Services.Input
         public void EnableUI()
         {
             InputActions.UI.Enable();
-            Debug.Log("UI Action Map ensured to be enabled.");
         }
 
         /// <summary>

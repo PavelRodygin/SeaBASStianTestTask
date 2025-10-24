@@ -18,23 +18,20 @@ namespace Modules.Base.ScrollSampleModule.Scripts
 
         private void Awake()
         {
-            if (rectTransform == null)
+            if (!rectTransform)
                 rectTransform = GetComponent<RectTransform>();
             
-            if (layoutElement == null)
+            if (!layoutElement)
                 layoutElement = GetComponent<LayoutElement>();
         }
 
         public void Initialize(int index)
         {
-            if (indexText != null)
+            if (indexText)
                 indexText.text = index.ToString();
         }
 
-        public void SetActive(bool active)
-        {
-            gameObject.SetActive(active);
-        }
+        public void SetActive(bool active) => gameObject.SetActive(active);
     }
 }
 

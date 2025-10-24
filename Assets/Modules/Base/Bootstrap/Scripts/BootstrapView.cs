@@ -88,6 +88,12 @@ namespace Modules.Base.Bootstrap.Scripts
             return UniTask.CompletedTask;
         }
 
+        public override async UniTask Hide()
+        {
+            StopAnimation();
+            await base.Hide();
+        }
+
         public override void Dispose()
         {
             StopAnimation();

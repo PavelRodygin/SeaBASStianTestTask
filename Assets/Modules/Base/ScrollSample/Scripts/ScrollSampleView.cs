@@ -49,7 +49,6 @@ namespace Modules.Base.ScrollSampleModule.Scripts
         private float _lastScrollPosition = -1f;
         private const float ScrollThreshold = 10f; // Minimum scroll distance to trigger update
         
-        // Placeholders for optimization
         private LayoutElement _topPlaceholder;
         private LayoutElement _bottomPlaceholder;
 
@@ -103,7 +102,7 @@ namespace Modules.Base.ScrollSampleModule.Scripts
             _totalItemCount = totalItems;
             
             // Setup LayoutGroup if available
-            if (contentLayoutGroup != null)
+            if (contentLayoutGroup)
             {
                 contentLayoutGroup.spacing = spacing;
                 contentLayoutGroup.childControlHeight = true;
@@ -186,7 +185,7 @@ namespace Modules.Base.ScrollSampleModule.Scripts
 
             // Temporarily disable LayoutGroup for batch operations
             bool layoutWasEnabled = false;
-            if (contentLayoutGroup != null)
+            if (contentLayoutGroup)
             {
                 layoutWasEnabled = contentLayoutGroup.enabled;
                 contentLayoutGroup.enabled = false;
@@ -213,7 +212,7 @@ namespace Modules.Base.ScrollSampleModule.Scripts
                 item.Initialize(i);
                 
                 // Set size and position based on whether LayoutGroup is used
-                if (contentLayoutGroup == null)
+                if (!contentLayoutGroup)
                 {
                     // Manual positioning
                     item.RectTransform.anchoredPosition = new Vector2(0, -i * (itemHeight + spacing));
@@ -222,7 +221,7 @@ namespace Modules.Base.ScrollSampleModule.Scripts
                 else
                 {
                     // LayoutGroup will manage positioning, configure LayoutElement
-                    if (item.LayoutElement != null)
+                    if (item.LayoutElement)
                         item.LayoutElement.preferredHeight = itemHeight;
                 }
                 
@@ -237,11 +236,10 @@ namespace Modules.Base.ScrollSampleModule.Scripts
             UpdatePlaceholders(firstVisibleIndex, lastVisibleIndex);
 
             // Re-enable LayoutGroup and force rebuild once
-            if (contentLayoutGroup != null && layoutWasEnabled)
-            {
-                contentLayoutGroup.enabled = true;
-                UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(content);
-            }
+            if (!contentLayoutGroup || !layoutWasEnabled) return;
+            
+            contentLayoutGroup.enabled = true;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(content);
         }
         
         private void UpdatePlaceholders(int firstVisibleIndex, int lastVisibleIndex)
@@ -259,13 +257,13 @@ namespace Modules.Base.ScrollSampleModule.Scripts
 
         private void ValidateUIElements()
         {
-            if (exitButton == null) 
+            if (!exitButton) 
                 Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(ScrollSampleView)}");
-            if (scrollRect == null) 
+            if (!scrollRect) 
                 Debug.LogError($"{nameof(scrollRect)} is not assigned in {nameof(ScrollSampleView)}");
-            if (content == null) 
+            if (!content) 
                 Debug.LogError($"{nameof(content)} is not assigned in {nameof(ScrollSampleView)}");
-            if (contentLayoutGroup == null) 
+            if (!contentLayoutGroup) 
                 Debug.LogWarning($"{nameof(contentLayoutGroup)} is not assigned in {nameof(ScrollSampleView)} - will use manual positioning");
         }
 
@@ -274,18 +272,15 @@ namespace Modules.Base.ScrollSampleModule.Scripts
             base.Dispose();
             scrollRect.onValueChanged.RemoveListener(OnScrollValueChanged);
             
-            // Clear active items
             foreach (var item in _activeItems.Values)
                 _itemPool?.Despawn(item);
-            _activeItems.Clear();
             
-            // Clear pool
+            _activeItems.Clear();
             _itemPool?.Clear();
             
-            // Destroy placeholders
-            if (_topPlaceholder != null) 
+            if (_topPlaceholder) 
                 Destroy(_topPlaceholder.gameObject);
-            if (_bottomPlaceholder != null) 
+            if (_bottomPlaceholder) 
                 Destroy(_bottomPlaceholder.gameObject);
         }
     }

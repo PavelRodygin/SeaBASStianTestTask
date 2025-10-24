@@ -98,8 +98,8 @@ namespace Modules.Base.Bootstrap.Scripts
 
         public async UniTask Exit()
         {
-            _cancellationTokenSource?.Cancel();
             await _bootstrapView.Hide();
+            _cancellationTokenSource?.Cancel();
         }
 
         public void HideInstantly() => _bootstrapView.HideInstantly();

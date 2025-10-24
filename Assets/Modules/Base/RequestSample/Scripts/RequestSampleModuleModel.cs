@@ -33,12 +33,11 @@ namespace Modules.Base.RequestSampleModule.Scripts
         {
             try
             {
-                var configText = Resources.Load<TextAsset>("RequestConfig");
-                if (configText)
-                {
-                    _config = JsonConvert.DeserializeObject<RequestConfig>(configText.text);
-                    Debug.Log($"[RequestSampleModuleModel] Config loaded: {_config.requestUrl}");
-                }
+                    var configText = Resources.Load<TextAsset>("RequestConfig");
+                    if (configText)
+                    {
+                        _config = JsonConvert.DeserializeObject<RequestConfig>(configText.text);
+                    }
                 else
                 {
                     Debug.LogWarning("[RequestSampleModuleModel] RequestConfig.json not found in Resources, using defaults");

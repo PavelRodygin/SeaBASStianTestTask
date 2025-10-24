@@ -6,20 +6,6 @@ using R3;
 
 namespace Modules.Base.ScrollSampleModule.Scripts
 {
-    /// <summary>
-        /// Main controller for ScrollSample module that manages the module lifecycle
-        /// and coordinates between Presenter, Model and View
-        /// 
-        /// IMPORTANT: This is a scrollSample file for ModuleCreator system.
-        /// When creating a new module, this file will be copied and modified.
-        /// 
-        /// Key points for customization:
-        /// 1. Change class name from ScrollSampleModuleController to YourModuleNameModuleController
-        /// 2. Update namespace Modules.Base.ScrollSampleModule.Scripts match your module location
-        /// 3. Customize module lifecycle management if needed
-        /// 4. Add specific initialization logic for your module
-        /// 5. Implement custom exit conditions if required
-    /// </summary>
     public class ScrollSampleModuleController : IModuleController
     {
         private readonly UniTaskCompletionSource _moduleCompletionSource;

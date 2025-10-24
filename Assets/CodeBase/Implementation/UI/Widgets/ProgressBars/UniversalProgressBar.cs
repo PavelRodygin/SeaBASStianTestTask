@@ -24,7 +24,6 @@ namespace CodeBase.Implementation.UI.Widgets.ProgressBars
             {
                 var percentage = (int)(exponentialProgress * 100);
                 progressValueText.text = $"{percentage}";
-                // Debug.Log($"[UniversalProgressBar] Progress: {progress:F2} -> Exponential: {exponentialProgress:F2} -> Text: {percentage}%");
             }
             else
             {

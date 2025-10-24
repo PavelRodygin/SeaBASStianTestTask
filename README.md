@@ -56,6 +56,27 @@ Built-in tool for automatically creating new modules:
 - **MainMenu**: Main application menu with standard MVP architecture
 - **StartGame**: Game launch screen
 
+### Performance & Optimization Modules
+- **ScrollSample**: Virtualized scroll list demonstration
+  - 1000+ items with object pooling and virtualization
+  - Placeholder-based optimization technique
+  - Only visible items are active in memory
+  - Demonstrates factory pattern + DI integration
+- **TimerSample**: Real-time display with zero allocations
+  - Millisecond-precision timer (HH:mm:ss.fff)
+  - Custom StringBuilder formatting for GC-free updates
+  - Observable.EveryUpdate() pattern from R3
+- **AnimationSample**: UI animation optimization
+  - 5 animated + 100 static UI elements
+  - DOTween + UniTask integration
+  - Canvas Static optimization for static elements
+  - Demonstrates proper cleanup patterns
+- **RequestSample**: HTTP request handling
+  - UnityWebRequest + UniTask async/await
+  - External JSON configuration (RequestConfig.json)
+  - Business logic in Model layer (MVP pattern)
+  - Error handling and response parsing
+
 ### Test Modules
 - **PopupsTester**: Test module for demonstrating the popup system
   - Implements PopupHub for modal window management
@@ -87,8 +108,12 @@ Assets/
 ## 🚀 Quick Start
 
 1. **Clone the repository**
-2. **Open the project in Unity** (recommended Unity 2022.3 LTS or newer)
-3. **Create a new module**:
+2. **Open the project in Unity** (Unity 6000.2.7f2 or newer)
+3. **Explore existing modules**:
+   - Open Bootstrap scene and press Play
+   - Navigate through MainMenu to test different modules
+   - Check performance modules (ScrollSample, TimerSample, AnimationSample, RequestSample)
+4. **Create a new module** (optional):
    - In Unity Editor: `Tools > Create Module`
    - Choose module name
    - Select module type
@@ -97,17 +122,21 @@ Assets/
 
 ## 📋 Requirements
 
-- Unity 2022.3 LTS or newer
-- .NET 4.x
-- Supported platforms: Windows, macOS, Linux
+- Unity 6000.2.7f2 or newer
+- .NET Standard 2.1
+- URP (Universal Render Pipeline) 2D
+- Supported platforms: Windows, macOS, Linux, WebGL
 
 ## 🔧 Technologies
 
-- **Unity**: Main engine
+- **Unity 6000.2**: Main engine with URP 2D renderer
 - **VContainer**: Dependency Injection container
-- **UniTask**: Asynchronous operations
-- **R3**: Reactive Extensions for Unity
+- **UniTask**: Asynchronous operations and async/await patterns
+- **R3**: Reactive Extensions for Unity (event-driven architecture)
 - **Stateless**: Advanced state machine library for complex state management
+- **DOTween**: Animation library for smooth UI transitions
+- **TextMeshPro**: Advanced text rendering
+- **Newtonsoft.Json**: JSON serialization/deserialization
 
 ## ⚡ Reactive Programming with R3
 
@@ -165,12 +194,34 @@ Tutorial ↻ InitializeTutorial
 - **Robust Transitions**: Validated state changes with clear error handling
 - **Scalability**: Easy to add new states or modify existing ones
 
+## ⚡ Performance & Best Practices
+
+The project demonstrates various optimization techniques and best practices:
+
+### Memory Management
+- **Object Pooling**: Reusable object pools with factory pattern
+- **Zero Allocation**: GC-free updates using StringBuilder and custom formatting
+- **Virtualization**: Only visible UI elements are active
+
+### UI Optimization
+- **Canvas Static**: Marking static UI elements for batch optimization
+- **Rect Mask 2D**: Lightweight masking instead of heavy Mask component
+- **Raycast Target**: Selective disabling for non-interactive elements
+- **Layout Groups**: Automatic positioning with VerticalLayoutGroup
+
+### Code Patterns
+- **Async/Await**: UniTask for non-blocking operations
+- **Reactive Programming**: R3 Observable streams for event handling
+- **Dependency Injection**: VContainer for loose coupling
+- **Factory Pattern**: Decoupled object creation with DI integration
+
 ## 📝 Features
 
 - **Not a game**: This is a technical repository for development and testing
 - **Mini-projects**: Each module represents a separate mini-project
 - **Popup system**: Built-in modal window management system
 - **Testing**: Support for creating test modules for debugging
+- **Performance showcases**: Demonstrations of optimization techniques
 
 ## 🤝 Contributing
 
