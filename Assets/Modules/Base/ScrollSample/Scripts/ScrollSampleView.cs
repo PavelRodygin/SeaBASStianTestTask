@@ -1,8 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using CodeBase.Core.UI.Views;
 using CodeBase.Services.Input;
 using Cysharp.Threading.Tasks;
 using R3;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -16,45 +17,34 @@ namespace Modules.Base.ScrollSampleModule.Scripts
     public readonly struct ScrollSampleCommands
     {
         public readonly ReactiveCommand<Unit> OpenMainMenuCommand;
-        public readonly ReactiveCommand<Unit> SettingsPopupCommand;
-        public readonly ReactiveCommand<bool> SoundToggleCommand;
 
-        public ScrollSampleCommands(
-            ReactiveCommand<Unit> openMainMenuCommand,
-            ReactiveCommand<Unit> settingsPopupCommand,
-            ReactiveCommand<bool> soundToggleCommand)
+        public ScrollSampleCommands(ReactiveCommand<Unit> openMainMenuCommand)
         {
             OpenMainMenuCommand = openMainMenuCommand;
-            SettingsPopupCommand = settingsPopupCommand;
-            SoundToggleCommand = soundToggleCommand;
         }
     }
     
     /// <summary>
-    /// View for ScrollSample module that handles UI interactions and visual representation
-    /// 
-    /// IMPORTANT: This is a scrollSample file for ModuleCreator system.
-    /// When creating a new module, this file will be copied and modified.
-    /// 
-    /// Key points for customization:
-    /// 1. Change class name from ScrollSampleView to YourModuleNameView
-    /// 2. Update namespace Modules.Base.ScrollSampleModule.Scripts match your module location
-    /// 3. Add your specific UI elements and commands
-    /// 4. Customize event handling for your UI
-    /// 5. Update validation methods for your UI elements
-    /// 6. Add any additional UI functionality your module needs
-    /// 
-    /// NOTE: Exit button (exitButton) is already configured to return to MainMenuModule
+    /// View for ScrollSample module - virtualized scroll with 1000 items using object pooling
     /// </summary>
     public class ScrollSampleView : BaseView
     {
         [Header("UI Elements")]
         [SerializeField] private Button exitButton;
-        [SerializeField] private Button settingsPopupButton;
-        [SerializeField] private Toggle musicToggle;
-        [SerializeField] private TMP_Text scrollSampleScreenTitle;
+        [SerializeField] private ScrollRect scrollRect;
+        [SerializeField] private RectTransform content;
+        [SerializeField] private ScrollItemView itemPrefab;
+        
+        [Header("Scroll Settings")]
+        [SerializeField] private float itemHeight = 100f;
+        [SerializeField] private float spacing = 10f;
         
         private InputSystemService _inputSystemService;
+        private ScrollItemPool _itemPool;
+        private readonly Dictionary<int, ScrollItemView> _activeItems = new();
+        private int _totalItemCount;
+        private int _visibleItemCount;
+        private float _viewportHeight;
 
         [Inject]
         private void Construct(InputSystemService inputSystemService)
@@ -80,17 +70,7 @@ namespace Modules.Base.ScrollSampleModule.Scripts
                 .Subscribe(_ => commands.OpenMainMenuCommand.Execute(default))
                 .AddTo(this);
 
-            settingsPopupButton.OnClickAsObservable()
-                .Where(_ => IsActive)
-                .Subscribe(_ => commands.SettingsPopupCommand.Execute(default))
-                .AddTo(this);
-
-            musicToggle.OnValueChangedAsObservable()
-                .Where(_ => IsActive)
-                .Subscribe(_ => commands.SoundToggleCommand.Execute(musicToggle.isOn))
-                .AddTo(this);
-
-            // Keyboard navigation support - Escape key for exit
+            // Keyboard navigation - Escape key for exit
             var openMainMenuPerformedObservable =
                 _inputSystemService.GetPerformedObservable(_inputSystemService.InputActions.UI.Cancel);
 
@@ -98,6 +78,9 @@ namespace Modules.Base.ScrollSampleModule.Scripts
                 .Where(_ => IsActive)
                 .Subscribe(_ => commands.OpenMainMenuCommand.Execute(default))
                 .AddTo(this);
+            
+            // Subscribe to scroll events for virtualization
+            scrollRect.onValueChanged.AddListener(OnScrollValueChanged);
         }
 
         public override async UniTask Show()
@@ -107,27 +90,83 @@ namespace Modules.Base.ScrollSampleModule.Scripts
             _inputSystemService.SetFirstSelectedObject(exitButton);
         }
 
-        public void SetTitle(string title)
+        public void InitializeScroll(int totalItems)
         {
-            if (scrollSampleScreenTitle != null)
-                scrollSampleScreenTitle.text = title;
-            else
-                Debug.LogWarning("scrollSampleScreenTitle is not assigned in the Inspector.");
+            _totalItemCount = totalItems;
+            
+            // Create object pool
+            var factory = new ScrollItemFactory(itemPrefab, content);
+            _itemPool = new ScrollItemPool(factory, content, initialSize: 20, maxSize: 30);
+            
+            // Calculate viewport height and visible items
+            _viewportHeight = scrollRect.viewport.rect.height;
+            _visibleItemCount = Mathf.CeilToInt(_viewportHeight / (itemHeight + spacing)) + 2; // +2 buffer
+            
+            // Set content height
+            float totalHeight = totalItems * (itemHeight + spacing) - spacing;
+            content.sizeDelta = new Vector2(content.sizeDelta.x, totalHeight);
+            
+            // Initial population
+            UpdateVisibleItems();
         }
 
-        public void InitializeSoundToggle(bool isMusicOn) => musicToggle.SetIsOnWithoutNotify(isMusicOn);
-
-        public void OnScreenEnabled()
-        {
+        public void OnScreenEnabled() => 
             _inputSystemService.SetFirstSelectedObject(exitButton);
+
+        private void OnScrollValueChanged(Vector2 scrollPosition) => UpdateVisibleItems();
+
+        private void UpdateVisibleItems()
+        {
+            if (_itemPool == null || _totalItemCount == 0) return;
+
+            // Calculate visible range
+            float scrollPosition = content.anchoredPosition.y;
+            int firstVisibleIndex = Mathf.Max(0, Mathf.FloorToInt(scrollPosition / (itemHeight + spacing)));
+            int lastVisibleIndex = Mathf.Min(_totalItemCount - 1, firstVisibleIndex + _visibleItemCount);
+
+            // Despawn items outside visible range
+            var itemsToRemove = new List<int>();
+            foreach (var kvp in _activeItems.Where(kvp => kvp.Key < firstVisibleIndex || kvp.Key > lastVisibleIndex))
+            {
+                _itemPool.Despawn(kvp.Value);
+                itemsToRemove.Add(kvp.Key);
+            }
+            foreach (var index in itemsToRemove)
+                _activeItems.Remove(index);
+
+            // Spawn items in visible range
+            for (int i = firstVisibleIndex; i <= lastVisibleIndex; i++)
+            {
+                if (_activeItems.ContainsKey(i)) continue;
+                
+                var item = _itemPool.Spawn();
+                if (!item) continue;
+                    
+                item.Initialize(i);
+                item.RectTransform.SetParent(content, false);
+                item.RectTransform.anchoredPosition = new Vector2(0, -i * (itemHeight + spacing));
+                item.RectTransform.sizeDelta = new Vector2(content.rect.width, itemHeight);
+                _activeItems[i] = item;
+            }
         }
 
         private void ValidateUIElements()
         {
-            if (exitButton == null) Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(ScrollSampleView)}");
-            if (settingsPopupButton == null) Debug.LogError($"{nameof(settingsPopupButton)} is not assigned in {nameof(ScrollSampleView)}");
-            if (musicToggle == null) Debug.LogError($"{nameof(musicToggle)} is not assigned in {nameof(ScrollSampleView)}");
-            if (scrollSampleScreenTitle == null) Debug.LogError($"{nameof(scrollSampleScreenTitle)} is not assigned in {nameof(ScrollSampleView)}");
+            if (exitButton == null) 
+                Debug.LogError($"{nameof(exitButton)} is not assigned in {nameof(ScrollSampleView)}");
+            if (scrollRect == null) 
+                Debug.LogError($"{nameof(scrollRect)} is not assigned in {nameof(ScrollSampleView)}");
+            if (content == null) 
+                Debug.LogError($"{nameof(content)} is not assigned in {nameof(ScrollSampleView)}");
+            if (itemPrefab == null) 
+                Debug.LogError($"{nameof(itemPrefab)} is not assigned in {nameof(ScrollSampleView)}");
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            scrollRect.onValueChanged.RemoveListener(OnScrollValueChanged);
+            _itemPool?.Clear();
         }
     }
 }
