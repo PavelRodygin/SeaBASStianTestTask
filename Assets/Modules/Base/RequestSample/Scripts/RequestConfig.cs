@@ -13,4 +13,3 @@ namespace Modules.Base.RequestSampleModule.Scripts
         public string description = "";
     }
 }
-
