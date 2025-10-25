@@ -1,14 +1,14 @@
-# ShrimpOlympus
+# TestTask
 
 Technical Unity repository with modular architecture for developing and testing various mini-projects.
 
 ## 🌐 WebGL Demo
 
-The project is available on **Unity Play** with a WebGL version that you can try directly in your browser:
+A project built on the same architecture (TechnicalSample repository) is available on **Unity Play**:
 
 **[▶️ Play on Unity Play](https://play.unity.com/en/games/8122daff-f003-466f-9eb4-fd11cb5fbcdc/idofront)**
 
-This allows you to explore the modules and architecture without downloading or installing anything.
+This allows you to explore the modular architecture and its capabilities directly in your browser without downloading or installing anything.
 
 ## 🏗️ Architecture
 
@@ -23,7 +23,6 @@ The project is built on modular architecture principles, where each module is an
 
 ### Architectural Patterns:
 - **Standard MVP**: Single Model-View-Presenter per module (MainMenu, Converter)
-- **State-Based MVP**: Multiple MVP triads with shared Model (TicTac)
 - **Module Controller**: Coordinates state transitions and module lifecycle
 - **Reactive Programming**: R3 integration for event-driven architecture
 
@@ -47,21 +46,13 @@ Built-in tool for automatically creating new modules:
 ## 📦 Existing Modules
 
 ### Base Modules
-- **TicTac**: Mini-game "Tic-tac-toe" with **advanced state-based MVP architecture**
-  - Multiple MVP triads coordinated by Module Controller
-  - Stateless FSM demonstration with 3 states: Tutorial → Game → Result
-  - Educational example of complex state management patterns
-  - R3 reactive programming integration
-- **Converter**: Data conversion utility with unified MVP pattern
 - **MainMenu**: Main application menu with standard MVP architecture
-- **StartGame**: Game launch screen
-
-### Performance & Optimization Modules
+- **Bootstrap**: Game launch screen
 - **ScrollSample**: Virtualized scroll list demonstration
   - 1000+ items with object pooling and virtualization
   - Placeholder-based optimization technique
   - Only visible items are active in memory
-  - Demonstrates factory pattern + DI integration
+  - Demonstrates Object Pool & Factory patterns + DI integration
 - **TimerSample**: Real-time display with zero allocations
   - Millisecond-precision timer (HH:mm:ss.fff)
   - Custom StringBuilder formatting for GC-free updates
@@ -168,32 +159,6 @@ dataStream
 - **Composition**: Easy combination of multiple event streams
 - **Performance**: Efficient event processing and UI updates
 
-## 🔄 State Management with Stateless
-
-The project demonstrates advanced state management patterns using **Stateless FSM library**:
-
-### TicTac Module Example:
-```
-Tutorial ↻ InitializeTutorial
-    ↓ StartGame
-  Game
-    ↓ PlayerWon/GameDraw
- Result
-    ↓ Restart (→ Game) | Exit (→ Tutorial)
-```
-
-### Key Patterns:
-- **Multiple MVP States**: Each state has its own Model-View-Presenter triad
-- **Shared Model**: Common data model across all state MVPs
-- **Module Controller**: Coordinates state transitions without being part of MVP
-- **Stateless Features**: `PermitReentry()`, `Ignore()`, `Permit()` for robust state control
-
-### Benefits:
-- **Educational Value**: Demonstrates complex state management patterns
-- **Separation of Concerns**: Each state is independently managed
-- **Robust Transitions**: Validated state changes with clear error handling
-- **Scalability**: Easy to add new states or modify existing ones
-
 ## ⚡ Performance & Best Practices
 
 The project demonstrates various optimization techniques and best practices:
@@ -236,4 +201,4 @@ The project demonstrates various optimization techniques and best practices:
 
 ---
 
-**ShrimpOlympus** - technical platform for modular development in Unity.
+**TestTask** - technical platform for modular development in Unity.
